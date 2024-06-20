@@ -422,6 +422,7 @@ end
 function Player:inactive()
     params:hide("doubledecker_group")
     _menu.rebuild_params()
+    self:stop_all()
 end
 
 function Player:note_off(note)
@@ -432,6 +433,10 @@ function Player:note_off(note)
             self.alloc:release(slot)
         end
     end
+end
+
+function Player:stop_all()
+  osc.send({ "localhost", 57120 }, "/doubledecker/all_off", {})
 end
 
 mod.hook.register("system_post_startup", "doubledecker post startup", function()
